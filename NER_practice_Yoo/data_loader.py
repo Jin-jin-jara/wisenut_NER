@@ -7,7 +7,11 @@ from data_utils import Vocabulary
 from data_utils import load_data_and_labels_klp, load_data_and_labels_exo
 from eunjeon import Mecab
 
-NER_idx_dic = {'<unk>':0, 'LC':1, 'DT':2, 'OG':3, 'TI':4, 'PS':5}
+NER_idx_dic = {'<unk>': 0, 'PS_PROF': 1, 'PS_ENT': 2, 'PS_POL': 3, 'PS_NAME': 4, 'AF_REC': 5,
+                   'AF_WARES':6,'AF_ITEM':7,'AF_SERVICE':8,'AF_OTHS':9,'OG_PRF':10,'OG_PRNF':11,'OG_PBF':12,'OG_PBNF':13,
+                   'LC_CNT':14,'LC_PLA':15,'LC_ADD':16,'LC_OTHS':17,'CV_TECH':18,'CV_LAWS':19,'EV_LT':20,'EV_ST':21,
+                   'GR_PLOR':22,'GR_PLCI':23,'TM_FLUC':24,'TM_ECOFIN':25,'TM_FUNC':26,'TM_CURR':27,'TM_OTHS':28,'PD_PD':29,
+                   'TI_TIME':30,'NUM_PRICE':31, 'NUM_PERC':32, 'NUM_OTHS':33}
 
 class DocumentDataset (data.Dataset):
     """"""
@@ -41,16 +45,10 @@ class DocumentDataset (data.Dataset):
 
             x_text_char_item.append(x_char_item)
 
-
-
         x_idx_item = prepare_sequence(x_text_item, self.vocab.word2idx)
         x_idx_char_item = prepare_char_sequence(x_text_char_item, self.char_vocab.word2idx)
         x_pos_item = prepare_sequence(x_pos_item, self.pos_vocab.word2idx)
         x_lex_item = prepare_lex_sequence(x_text_item, self.lex_dict)
-
-
-
-
 
         label = torch.LongTensor(label_item)
         # print("label")
@@ -191,6 +189,8 @@ def get_loader(data_file_dir, vocab, char_vocab, pos_vocab, lex_dict, batch_size
     elif dataset == 'both':
         x_list, x_pos_list, x_split_list, y_list = load_data_and_labels_klp(data_file_dir=data_file_dir)
         x_list_2, x_pos_list_2, x_split_list_2, y_list_2 = load_data_and_labels_exo(data_file_dir='./data_in/EXOBRAIN_NE_CORPUS_10000.txt')
+    elif dataset == 'wisenut':
+
 
 
         x_list = x_list + x_list_2

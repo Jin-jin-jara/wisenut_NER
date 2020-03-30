@@ -1,5 +1,6 @@
 import numpy as np
 import os
+import torch
 
 # from konlpy.tag import Kkma
 # from konlpy.tag import Twitter
@@ -27,7 +28,16 @@ def load_data_and_labels_exo(data_file_dir):
     file_obj = codecs.open(data_file_dir, "r", "utf-8")
     lines = file_obj.readlines()
 
-    NER_label_list = [':PS', ':DT', ':LC', ':OG', ':TI']
+    NER_label_list = [':PS_PROF', ':PS_ENT', ':PS_POL', ':PS_NAME', ':AF_REC', ':AF_WARES', ':AF_ITEM',
+                      ':AF_SERVICE',':AF_OTHS',':OG_PRF',':OG_PRNF',':OG_PBF',':OG_PBNF',':LC_CNT',':LC_PLA',
+                      ':LC_ADD',':LC_OTHS',':CV_TECH',':CV_LAWS',':EV_LT',':EV_ST',':GR_PLOR',':GR_PLCI',
+                      ':TM_FLUC',':TM_ECOFIN',':TM_FUNC',':TM_CURR',':TM_OTHS',':PD_PD',':TI_TIME',
+                      ':NUM_PRICE',':NUM_PERC',':NUM_OTHS']
+
+    labels = torch.arange(len(NER_label_list))
+    one_hot = torch.zeros(len(NER_label_list)+3, len(NER_label_list)+3)
+    one_hot[torch]
+
     NER_dict = {'<PAD>': [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                 'B_LC': [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
                 'B_DT': [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],

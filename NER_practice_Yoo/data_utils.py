@@ -45,10 +45,6 @@ def build_vocab(text_list, threshold):
         # tokens_en = mecab.pos(text)
         counter.update(text)
 
-
-
-
-
         if i % 1000 == 0:
             print("[%d/%d] Tokenized input text." %(i, len(text_list)))
 
@@ -167,8 +163,6 @@ def load_data_and_labels_exo(data_file_dir):
     x_split_list = list()
     y_list = list()
 
-
-
     file_obj = codecs.open(data_file_dir, "r", "utf-8" )
     lines = file_obj.readlines()
 
@@ -181,7 +175,6 @@ def load_data_and_labels_exo(data_file_dir):
                 'B_PS': [0, 0, 0, 0, 0, 1, 0, 0],
                 'I': [0, 0, 0, 0, 0, 0, 1, 0],
                 'O': [0, 0, 0, 0, 0, 0, 0, 1]}
-
 
     re_word = re.compile('<(.+?):[A-Z]{2}>')
 
@@ -210,8 +203,6 @@ def load_data_and_labels_exo(data_file_dir):
                 x_mor.append(mor_pos[0])
                 x_pos.append(mor_pos[1])
 
-
-
                 if len_pos_word == len_split_word:
                     i = i + 1
                     len_pos_word = 0
@@ -223,8 +214,6 @@ def load_data_and_labels_exo(data_file_dir):
         x_mor_list.append(x_mor)
         x_pos_list.append(x_pos)
         x_split_list.append(x_split)
-
-
 
         # label data
         label_data = line
@@ -252,8 +241,6 @@ def load_data_and_labels_exo(data_file_dir):
         data_len = 0
         B_I_data_len = 0
 
-
-
         for i in range(len(x_mor)):
             pos_i_split = x_split[i]
             word_mor = x_mor[i]
@@ -263,7 +250,6 @@ def load_data_and_labels_exo(data_file_dir):
                 continue
 
             if word_mor in re_word_list[0][0]:
-
 
                 # print("word_mor:", word_mor)
                 # print("data_len:", data_len)
@@ -285,7 +271,6 @@ def load_data_and_labels_exo(data_file_dir):
                         B_I_data_len = 0
                         B_flag = 0 # B_ token mark init
 
-
                     elif i + 1 < len(x_mor):
                         if x_mor[i + 1] not in re_word_list[0][0]:  # 시작일줄 알았는데 서브스트링이고, 매칭도 안되고 다음글자가 속하지 않으면 다시 리셋
                             y_data[i] = 'O'
@@ -293,7 +278,6 @@ def load_data_and_labels_exo(data_file_dir):
                             data_len = 0
                             B_I_data_len = 0
                             B_flag = 0  # B_ token mark init
-
 
                 elif B_flag == 1:
 
@@ -316,9 +300,7 @@ def load_data_and_labels_exo(data_file_dir):
             y_data_idx.append(NER_dict[y])
         y_list.append(y_data_idx)
 
-
     #y_list = np.array(y_list)
-
 
     return x_mor_list, x_pos_list, x_split_list, y_list
 
@@ -329,7 +311,6 @@ def load_data_and_labels_klp(data_file_dir):
     x_pos_list = list()
     x_split_list = list()
     y_list = list()
-
 
     file_obj = codecs.open(data_file_dir, "r", "utf-8" )
     lines = file_obj.readlines()
